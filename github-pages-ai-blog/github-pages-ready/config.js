@@ -1,6 +1,6 @@
 window.APP_CONFIG = {
-  supabaseUrl: "",
-  supabaseAnonKey: "",
+  supabaseUrl: "https://kvirycczptvidwdrpaeg.supabase.co",
+  supabaseAnonKey: "sb_publishable_vtVP1dqfBULI8_HkPGV99Q_RFafA4o3",
   openRouterApiBase: "https://openrouter.ai/api/v1",
   defaultModel: "openai/gpt-4.1-mini",
   allowedModels: [
