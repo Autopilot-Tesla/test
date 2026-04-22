@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="GitHub Pages-compatible AI blog with owner-only posting, global chat rooms, theme editing, and browser-configurable AI model access."
+    />
+    <meta name="theme-color" content="#101720" />
+    <title>Yates Editorial OS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./config.js"></script>
+  </head>
+  <body>
+    <div class="noise"></div>
+    <div class="shell">
+      <aside class="sidebar panel">
+        <div>
+          <p class="eyebrow">Yates Editorial OS</p>
+          <h1>Quiet luxury software for a blog that can actually ship on GitHub Pages.</h1>
+          <p class="lede">
+            The frontend stays static and portable. Authentication, permanent accounts, posts, and
+            realtime rooms are connected through a hosted browser-safe data layer.
+          </p>
+        </div>
+
+        <nav class="side-nav">
+          <button class="side-link is-active" data-jump="overview">Overview</button>
+          <button class="side-link" data-jump="feed">Blog feed</button>
+          <button class="side-link" data-jump="workspace">AI workspace</button>
+          <button class="side-link" data-jump="community">Community</button>
+          <button class="side-link" data-jump="theme">Theme editor</button>
+          <button class="side-link" data-jump="setup">Setup notes</button>
+        </nav>
+
+        <div class="sidebar-card">
+          <p class="eyebrow">Deployment model</p>
+          <p>
+            Upload these files directly to a GitHub Pages branch or folder. No terminal is required
+            after the files are prepared.
+          </p>
+        </div>
+      </aside>
+
+      <main class="content">
+        <section id="overview" class="hero panel">
+          <div class="hero-copy">
+            <p class="eyebrow">Architecture overview</p>
+            <h2>Static shell. Hosted identity. Browser-owned AI key.</h2>
+            <p>
+              This app is built for your exact constraint: files that can be dragged into GitHub and
+              served by GitHub Pages. The page itself is static, while global users, chat rooms,
+              posts, and account deletion are handled through a hosted service that exposes a public
+              project URL and anon key.
+            </p>
+            <div class="hero-actions">
+              <button class="button button-primary" id="openAuthButton">Sign in</button>
+              <button class="button button-secondary" data-jump="setup">Open setup guide</button>
+            </div>
+            <div class="hero-grid">
+              <article>
+                <span>Owner role</span>
+                <strong>Only the designated owner can publish blog posts.</strong>
+              </article>
+              <article>
+                <span>Model switching</span>
+                <strong>Users can choose supported AI models once a local AI key is present.</strong>
+              </article>
+              <article>
+                <span>Persistence</span>
+                <strong>Accounts and chat live remotely, not only in local storage.</strong>
+              </article>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <img
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663536972351/afqPZbnGrTWQoKbHf6nbro/ai-blog-hero-3CDZbbxGUA7FDDHsAy6prJ.webp"
+              alt="Editorial AI platform hero image"
+            />
+            <div class="hero-caption panel-soft">
+              <p class="eyebrow">Selected design system</p>
+              <p>
+                Quiet luxury terminalism with editorial typography, smoked navy surfaces, frosted
+                panels, and measured motion.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="overview-grid">
+          <article class="panel card">
+            <p class="eyebrow">Session status</p>
+            <h3 id="sessionLabel">Signed out</h3>
+            <p id="sessionDetail">Use email magic links or password auth through the hosted identity service.</p>
+          </article>
+          <article class="panel card">
+            <p class="eyebrow">AI key</p>
+            <h3 id="aiKeyLabel">Missing</h3>
+            <p id="aiKeyDetail">Add your personal AI key in settings so the site never commits a secret to GitHub Pages.</p>
+          </article>
+          <article class="panel card">
+            <p class="eyebrow">Current room</p>
+            <h3 id="roomLabel">#global</h3>
+            <p>The community tab can load one public room by default and additional rooms from the database.</p>
+          </article>
+        </section>
+
+        <section id="feed" class="panel split-section">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Blog feed</p>
+              <h3>Owner-only publishing with public reading.</h3>
+            </div>
+            <button class="button button-secondary" id="refreshPostsButton">Refresh posts</button>
+          </div>
+          <div class="split-grid">
+            <div>
+              <div id="postsList" class="stack-list"></div>
+            </div>
+            <div class="editor-shell panel-soft">
+              <div class="editor-head">
+                <div>
+                  <p class="eyebrow">Composer</p>
+                  <h4>Write and publish</h4>
+                </div>
+                <span id="ownerBadge" class="status-chip">Owner role required</span>
+              </div>
+              <form id="postForm" class="stack-form">
+                <label>
+                  <span>Title</span>
+                  <input id="postTitle" type="text" placeholder="A precise, memorable title" />
+                </label>
+                <label>
+                  <span>Excerpt</span>
+                  <textarea id="postExcerpt" rows="3" placeholder="A short summary for the feed"></textarea>
+                </label>
+                <label>
+                  <span>Body</span>
+                  <textarea id="postBody" rows="8" placeholder="Write the article body here"></textarea>
+                </label>
+                <div class="form-actions">
+                  <button class="button button-primary" type="submit">Publish post</button>
+                  <button class="button button-secondary" type="button" id="seedDemoPostButton">Insert demo draft</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section id="workspace" class="panel split-section">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">AI workspace</p>
+              <h3>Multiple models, one local key field.</h3>
+            </div>
+            <div class="toolbar-inline">
+              <select id="modelSelect"></select>
+              <button class="button button-secondary" id="saveAiKeyButton">Save AI key</button>
+            </div>
+          </div>
+          <div class="split-grid">
+            <div class="workspace-note panel-soft image-panel">
+              <img
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663536972351/afqPZbnGrTWQoKbHf6nbro/blog-editor-visual-QKXYSKn7bemUz5ijeS6srQ.webp"
+                alt="AI-assisted publishing interface illustration"
+              />
+            </div>
+            <div class="chat-shell panel-soft">
+              <div class="chat-log" id="aiChatLog"></div>
+              <form id="aiForm" class="chat-form">
+                <label>
+                  <span>OpenRouter or compatible key</span>
+                  <input id="aiKeyInput" type="password" placeholder="Paste your personal key in this browser only" />
+                </label>
+                <label>
+                  <span>Message</span>
+                  <textarea id="aiPromptInput" rows="4" placeholder="Summarize my draft and suggest a stronger ending"></textarea>
+                </label>
+                <div class="form-actions">
+                  <button class="button button-primary" type="submit">Send to model</button>
+                  <button class="button button-secondary" type="button" id="seedAiPromptButton">Use demo prompt</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section id="community" class="panel split-section">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Community</p>
+              <h3>Realtime room chat with permanent accounts.</h3>
+            </div>
+            <div class="toolbar-inline">
+              <select id="roomSelect"></select>
+              <button class="button button-secondary" id="refreshMessagesButton">Refresh room</button>
+            </div>
+          </div>
+          <div class="split-grid">
+            <div class="community-visual panel-soft image-panel">
+              <img
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663536972351/afqPZbnGrTWQoKbHf6nbro/community-chat-visual-6CwD7wBz7xMCEjxhDMterc.webp"
+                alt="Community chat interface illustration"
+              />
+            </div>
+            <div class="chat-shell panel-soft">
+              <div class="chat-log" id="communityLog"></div>
+              <form id="messageForm" class="chat-form">
+                <label>
+                  <span>Message</span>
+                  <textarea id="messageInput" rows="3" placeholder="Share your idea with the room"></textarea>
+                </label>
+                <div class="form-actions">
+                  <button class="button button-primary" type="submit">Send message</button>
+                  <button class="button button-secondary" type="button" id="seedMessageButton">Use demo message</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section id="theme" class="panel split-section">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Theme editor</p>
+              <h3>Personalize the shell without breaking the deploy.</h3>
+            </div>
+          </div>
+          <div class="theme-grid">
+            <article class="panel-soft">
+              <p class="eyebrow">Presets</p>
+              <div class="preset-row">
+                <button class="button button-secondary theme-preset" data-theme="obsidian">Obsidian</button>
+                <button class="button button-secondary theme-preset" data-theme="bone">Bone</button>
+                <button class="button button-secondary theme-preset" data-theme="sage">Sage</button>
+              </div>
+            </article>
+            <article class="panel-soft">
+              <p class="eyebrow">Core values</p>
+              <div class="theme-fields">
+                <label><span>Background</span><input type="color" id="backgroundColor" value="#101720" /></label>
+                <label><span>Surface</span><input type="color" id="surfaceColor" value="#18212d" /></label>
+                <label><span>Accent</span><input type="color" id="accentColor" value="#c6a46b" /></label>
+                <label><span>Text</span><input type="color" id="textColor" value="#f4ede1" /></label>
+              </div>
+              <div class="form-actions">
+                <button class="button button-primary" id="saveThemeButton" type="button">Save theme</button>
+                <button class="button button-secondary" id="resetThemeButton" type="button">Reset theme</button>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="setup" class="panel split-section">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Setup notes</p>
+              <h3>Read the included manual before going live.</h3>
+            </div>
+          </div>
+          <div class="setup-grid">
+            <article class="panel-soft">
+              <h4>Included files</h4>
+              <ul>
+                <li><code>README_SETUP.md</code> explains the full browser-only configuration path.</li>
+                <li><code>supabase-policies.sql</code> creates the tables and security rules.</li>
+                <li><code>config.example.js</code> shows exactly what values to paste into <code>config.js</code>.</li>
+              </ul>
+            </article>
+            <article class="panel-soft">
+              <h4>Important reality</h4>
+              <p>
+                A static site cannot safely hide an owner-wide AI provider key. This package uses a
+                browser-only personal key field instead. Public data access is controlled by hosted
+                security policies, not by hiding the anon key.
+              </p>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="authDialog" class="auth-dialog panel-soft">
+      <form id="authForm" method="dialog" class="stack-form">
+        <div class="section-head dialog-head">
+          <div>
+            <p class="eyebrow">Authentication</p>
+            <h3>Sign in or create an account</h3>
+          </div>
+          <button class="button button-secondary" type="button" id="closeAuthButton">Close</button>
+        </div>
+        <label>
+          <span>Email</span>
+          <input id="authEmail" type="email" placeholder="you@example.com" required />
+        </label>
+        <label>
+          <span>Password</span>
+          <input id="authPassword" type="password" placeholder="Choose a secure password" required />
+        </label>
+        <div class="form-actions">
+          <button class="button button-primary" type="submit" data-auth-action="signin">Sign in</button>
+          <button class="button button-secondary" type="button" id="signUpButton">Create account</button>
+          <button class="button button-secondary" type="button" id="magicLinkButton">Send magic link</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast"></div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
